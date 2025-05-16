@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barber Shop Reservation System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Barber Shop Reservation System</h1>
+            <nav id="nav-menu">
+                <button id="loginBtn" class="nav-btn active">Login</button>
+                <button id="registerBtn" class="nav-btn">Register</button>
+                <button id="clientBtn" class="nav-btn hidden">Client Dashboard</button>
+                <button id="barberBtn" class="nav-btn hidden">Barber Dashboard</button>
+                <button id="logoutBtn" class="nav-btn hidden">Logout</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Authentication Panels -->
+            <div id="authPanel" class="panel active">
+                <div id="loginFormContainer" class="form-container">
+                    <h2>Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email:</label>
+                            <input type="email" id="loginEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password:</label>
+                            <input type="password" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn primary-btn">Login</button>
+                        <p class="form-switch">Don't have an account? <a href="#" id="switchToRegister">Register here</a></p>
+                    </form>
+                </div>
+
+                <div id="registerFormContainer" class="form-container hidden">
+                    <h2>Register</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="registerName">Full Name:</label>
+                            <input type="text" id="registerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPhone">Phone Number:</label>
+                            <input type="tel" id="registerPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email:</label>
+                            <input type="email" id="registerEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password:</label>
+                            <input type="password" id="registerPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerRole">Role:</label>
+                            <select id="registerRole" required>
+                                <option value="">Select Role</option>
+                                <option value="Client">Client</option>
+                                <option value="Barber">Barber</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn primary-btn">Register</button>
+                        <p class="form-switch">Already have an account? <a href="#" id="switchToLogin">Login here</a></p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Client Dashboard Panel -->
+            <div id="clientPanel" class="panel hidden">
+                <div class="user-profile">
+                    <div class="profile-photo-container">
+                        <img id="clientProfilePhoto" src="https://via.placeholder.com/150" alt="Profile Photo" class="profile-photo">
+                        <div class="photo-upload-overlay">
+                            <label for="clientPhotoUpload" class="photo-upload-btn">
+                                <i class="fas fa-camera"></i>
+                            </label>
+                            <input type="file" id="clientPhotoUpload" accept="image/*" class="hidden">
+                        </div>
+                    </div>
+                    <div class="profile-info">
+                        <h3 id="clientProfileName">Welcome</h3>
+                        <p id="clientProfileEmail"></p>
+                        <p id="clientProfilePhone"></p>
+                    </div>
+                </div>
+                <h2>Book an Appointment</h2>
+                
+                <div class="barbers-list">
+                    <h3>Available Barbers</h3>
+                    <div id="barbersContainer" class="barbers-grid"></div>
+                </div>
+
+                <div id="bookingForm" class="hidden form-container">
+                    <h3>Book with <span id="selectedBarberName"></span></h3>
+                    <form id="appointmentForm">
+                        <div class="form-group">
+                            <label for="service">Service:</label>
+                            <select id="service" required>
+                                <option value="">Select Service</option>
+                                <option value="Haircut">Haircut</option>
+                                <option value="Shave">Shave</option>
+                                <option value="Beard Trim">Beard Trim</option>
+                                <option value="Hair Coloring">Hair Coloring</option>
+                                <option value="Full Package">Full Package</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentDate">Date:</label>
+                            <input type="date" id="appointmentDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentTime">Time:</label>
+                            <select id="appointmentTime" required>
+                                <option value="">Select Time</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn primary-btn">Book Appointment</button>
+                            <button type="button" id="cancelBooking" class="btn secondary-btn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="clientAppointmentsPanel">
+                    <h3>Your Appointments</h3>
+                    <div class="appointments-tabs">
+                        <button class="tab-btn active" data-status="all">All</button>
+                        <button class="tab-btn" data-status="pending">Pending</button>
+                        <button class="tab-btn" data-status="accepted">Accepted</button>
+                        <button class="tab-btn" data-status="rejected">Rejected</button>
+                    </div>
+                    <div id="clientAppointments" class="appointments-list"></div>
+                </div>
+            </div>
+
+            <!-- Barber Dashboard Panel -->
+            <div id="barberPanel" class="panel hidden">
+                <div class="user-profile">
+                    <div class="profile-photo-container">
+                        <img id="barberProfilePhoto" src="https://via.placeholder.com/150" alt="Profile Photo" class="profile-photo">
+                        <div class="photo-upload-overlay">
+                            <label for="barberPhotoUpload" class="photo-upload-btn">
+                                <i class="fas fa-camera"></i>
+                            </label>
+                            <input type="file" id="barberPhotoUpload" accept="image/*" class="hidden">
+                        </div>
+                    </div>
+                    <div class="profile-info">
+                        <h3 id="barberProfileName">Welcome</h3>
+                        <p id="barberProfileEmail"></p>
+                        <p id="barberProfilePhone"></p>
+                    </div>
+                </div>
+                <h2>Manage Appointments</h2>
+                
+                <div class="appointments-tabs">
+                    <button class="tab-btn active" data-status="pending">Pending</button>
+                    <button class="tab-btn" data-status="accepted">Accepted</button>
+                    <button class="tab-btn" data-status="rejected">Rejected</button>
+                </div>
+
+                <div id="barberAppointments">
+                    <div id="pendingAppointments" class="appointments-list"></div>
+                    <div id="acceptedAppointments" class="appointments-list hidden"></div>
+                    <div id="rejectedAppointments" class="appointments-list hidden"></div>
+                </div>
+            </div>
+        </main>
+
+        <div id="notification" class="notification hidden"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
